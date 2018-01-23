@@ -1,5 +1,5 @@
 $(document).ready(() => {
-  setTimeout(popup, 1000);
+  setTimeout(popup, 3000);
 
   function popup() {
     $("#logindiv").css("display", "block");
