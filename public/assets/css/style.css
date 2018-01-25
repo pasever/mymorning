@@ -60,8 +60,21 @@ input {
   display: none;
 }
 
-#login {
-  width: 350px;
+#signupdiv {
+  opacity: 0.92;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  height: 100%;
+  width: 100%;
+  background: #000;
+  padding-bottom: 15%;
+  display: none;
+
+}
+
+#login, #signup {
+  width: 400px;
   margin: 0px;
   background-color: white;
   font-family: 'Fauna One', serif;
@@ -69,7 +82,7 @@ input {
   border: 5px solid rgb(90, 158, 181);
 }
 
-#login {
+#login, #signup {
   left: 50%;
   top: 45%;
   margin-left: -210px;
@@ -80,15 +93,23 @@ input {
   margin-bottom: 5%;
 }
 
-#username {
+.username {
   margin-top: 5%;
   margin-bottom: 5%;
 }
-#password {
+.password {
+  margin-top: 5%;
+  margin-bottom: 10%;
+}
+.email {
   margin-top: 5%;
   margin-bottom: 10%;
 }
 
-#loginbtn, #cancelbtn {
+.loginbtn, .cancelbtn {
   margin-bottom: 5%;
+}
+
+#mainform h4 {
+  padding-top: 2%;
 }

@@ -1,6 +1,8 @@
   <div id="mainform">
     <h2>Good Morning!</h2>
     <h2>Lets start your day :)</h2>
+    <h4>Please <a href="" id="iflogin"><b><i>log in </i></b></a>
+      or <a href="" id="ifsignup"><i><b>sign up</b></i></a></h4>
   </div>
 
   <div id="logindiv">
@@ -8,11 +10,27 @@
       <h3>Login Form</h3>
       <hr/>
       <label>Username : </label>
-      <input type="text" id="username" placeholder="John Dow" />
+      <input type="text" class="username" placeholder="John Dow" />
       <label>Password : </label>
-      <input type="text" id="password" placeholder="************" />
-      <input type="button" id="loginbtn" value="Login" />
-      <input type="button" id="cancelbtn" value="Cancel" />
+      <input type="text" class="password" placeholder="************" />
+      <input type="button" class="loginbtn" value="Login" />
+      <input type="button" class="cancelbtn" value="Cancel" />
+    </form>
+  </div>
+
+  <div id="signupdiv">
+    <form class="form" action="#" id="signup">
+      <h3>Sign Up Form</h3>
+      <hr/>
+      <label>First Name : </label>
+      <input type="text" class="username" placeholder="John" />
+      <label>Last Name : </label>
+      <input type="text" class="password"placeholder="Smith" />
+      <label>E-mail : </label>
+      <input type="email" class="email" placeholder="email@gmail.com" />
+      <hr/>
+      <input type="button" class="loginbtn" value="Sign up" />
+      <input type="button" class="cancelbtn" value="Cancel" />
     </form>
 
   </div>
