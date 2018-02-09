@@ -31,7 +31,7 @@ h3 {
 }
 
 input {
-  width: 95%;
+  width: 99%;
   height: 35px;
   margin-top: 5px;
   border: 1px solid #999;
@@ -57,7 +57,7 @@ input {
   height: 100%;
   width: 100%;
   background: #000;
-  display: none;
+  /* display: none; */
 }
 
 #signupdiv {
@@ -68,12 +68,10 @@ input {
   height: 100%;
   width: 100%;
   background: #000;
-  padding-bottom: 15%;
-  display: none;
 
 }
 
-#login, #signup {
+#login {
   width: 400px;
   margin: 0px;
   background-color: white;
@@ -81,29 +79,30 @@ input {
   position: relative;
   border: 5px solid rgb(90, 158, 181);
 }
+#signup {
+  width: 500px;
+  background-color: white;
+  font-family: 'Fauna One', serif;
+  position: relative;
+  border: 5px solid rgb(90, 158, 181);
+}
 
-#login, #signup {
+#login {
   left: 50%;
   top: 45%;
   margin-left: -210px;
   margin-top: -158px;
 }
-
-#logindiv hr {
-  margin-bottom: 5%;
+#signup {
+  left: 50%;
+  top: 25%;
+  margin-left: -210px;
+  margin-top: -158px;
 }
 
-.username {
-  margin-top: 5%;
-  margin-bottom: 5%;
-}
-.password {
-  margin-top: 5%;
-  margin-bottom: 10%;
-}
-.email {
-  margin-top: 5%;
-  margin-bottom: 10%;
+.email, .username, .password, .firstName, .lastName, .confirmedPassword{
+  margin-top: 1.5%;
+  margin-bottom: 1.5%;
 }
 
 .loginbtn, .cancelbtn {
