@@ -4,14 +4,15 @@ const express = require('express'),
   bodyParser = require('body-parser'),
   mongoose = require('mongoose'),
   session = require('express-session'),
+  MongoDBStore = require('connect-mongodb-session')(session),
   request = require('request'),
-  exphbs = require('express-handlebars'), 
+  exphbs = require('express-handlebars'),
   bcrypt = require('bcrypt'),
   logger = require('morgan'),
   PORT = process.env.PORT || 8000,
   app = express(),
   db = require('./models');
- 
+
 
 //session storage module
 
@@ -29,21 +30,35 @@ const express = require('express'),
 // });
 
 //setting up our session
-app.use(session({
-              secret: "I love New York",
-              resave: true,
-   saveUninitialized: false
-  // mongooseConnection: db
+
+const store = new MongoDBStore(
+  {
+    uri: 'mongodb://localhost/detais',
+    collection: 'MySessions'
+  });
+
+  app.use(session({
+  secret: "I love New York",
+  resave: true,
+  saveUninitialized: true,
+  store: store
 }));
 
 async function verifyUser(email, password) {
-    const user = await db.User.findOne({email});
-    const dbPassword = user.password;
-    const isValid = await bcrypt.compare(password, dbPassword);
-    return {isValid, user};
+  const user = await db.User.findOne({ email });
+  const dbPassword = user.password;
+  const isValid = await bcrypt.compare(password, dbPassword);
+  return {
+    isValid,
+    user
+  };
 }
 
- // express settings
+// async function validateData(req.body) {
+
+// }
+
+// express settings
 app.use(express.static("public"));
 app.use(bodyParser.urlencoded({
   extended: false
@@ -53,7 +68,7 @@ app.use(logger("dev"));
 
 app.use(expressSanitizer());
 
-//mongo settings
+//mongodb settings
 mongoose.connect("mongodb://localhost/detais");
 mongoose.connection.on('error', console.error.bind(console, 'connection error'));
 
@@ -75,15 +90,22 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/profile", (req, res)=> {
-  const { user } = req.session;
-  res.render("profile", {user});
+app.get("/profile", (req, res) => {
+  const {
+    user }
+   = req.session;
+  res.render("profile", {
+    user
+  });
 });
 
 app.post("/login", async (req, res, next) => {
- 
-  const { email, password } = req.body;
-  
+
+  const {
+    email,
+    password
+  } = req.body;
+
   try {
     const isValidObject = await verifyUser(email, password, next);
     if (!isValidObject.isValid) throw new Error('The username or password you entered is incorrect.');
@@ -91,7 +113,9 @@ app.post("/login", async (req, res, next) => {
     res.redirect('/profile');
   } catch (error) {
     error.message = 'The username or password you entered is incorrect.';
-    res.render('login', { error });
+    res.render('login', {
+      error
+    });
   }
 
 });
@@ -110,38 +134,59 @@ app.get("/signup", (req, res) => {
 });
 
 app.post("/signup", (req, res) => {
- 
-const { firstName, lastName, email, password, confirmedPassword } = req.body;
- 
-    if (password !== confirmedPassword) {
-       let error = new Error("Passwords don't match!");
-       res.render('signup', { error });
-       return;
-    }
 
-    const newUser = { firstName, lastName, password, email };
-   
-   // req.body.sanitized = req.sanitize(req.body.propertyToSanitize);
-  // let newUserSanitized = sanitize(newUser);
+  // const validData = await validateData(req.body);
 
-//     newUser.each( newUser , function(value, key, list){
-//     finalUser[key] =  sanitize(value).xss(); 
-//     console.log(finalUser);
-//  })
 
-    db.User
-      .create(newUser, (err, user) => {
-        if (err) throw err;
-        else {
-          res.redirect("/profile");
-        }
-      });
+  req.body.sanitized = {
+    firstName: req.sanitize(req.body.firstName),
+    lastName: req.sanitize(req.body.lastName),
+    email: req.sanitize(req.body.email),
+    password: req.sanitize(req.body.password),
+    confirmedPassword: req.sanitize(req.body.confirmedPassword)
+  };
+  
+  const {
+    firstName,
+    lastName,
+    email,
+    password,
+    confirmedPassword
+  } = req.body.sanitized;
+
+
+  if (password !== confirmedPassword) {
+    let error = new Error("Passwords don't match!");
+    res.render('signup', {
+      error: error.message
+    });
+    return;
+  }
+
+  const newUser = {
+    firstName,
+    lastName,
+    email,
+    password
+  };
+
+  db.User
+    .create(newUser, function(err, user) {
+      if (err) throw err;
+      console.log(req.session);
+      req.session.user = user;
+      res.redirect("/profile");
+
+    });
+
 });
 
 function handleUnexpectedError(err, req, res, next) {
 
   console.warn('THERE WAS AN UNEXPECTED ERROR');
-  res.json({err});
+  res.json({
+    err
+  });
 }
 
 app.use(handleUnexpectedError);
