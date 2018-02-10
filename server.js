@@ -14,10 +14,6 @@ const express = require('express'),
   db = require('./models');
 
 
-//session storage module
-
-//const MongoStore = require('connect-mongo')(session);
-
 // deleting the session after logout
 // app.get('logout', (req, res) =>{
 //   if(req.session) {
