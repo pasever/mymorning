@@ -26,7 +26,6 @@ h3 {
   font-size: 14px;
   font-weight: bold;
   width: 350px;
-  /* margin: 20px 250px 0 35px; */
   float: left;
 }
 
@@ -52,12 +51,12 @@ input {
 #logindiv {
   opacity: 0.92;
   position: absolute;
-  top: 0px;
-  left: 0px;
+  /* top: 0px; */
+  /* left: 0px; */
   height: 100%;
   width: 100%;
-  background: #000;
-  /* display: none; */
+  /* background: #000; */
+  background: rgb(17, 25, 43);
 }
 
 #signupdiv {
@@ -67,8 +66,8 @@ input {
   left: 0px;
   height: 100%;
   width: 100%;
-  background: #000;
-
+  /* background: #000; */
+  background: rgb(17, 25, 43);
 }
 
 #login {
@@ -78,27 +77,26 @@ input {
   font-family: 'Fauna One', serif;
   position: relative;
   border: 5px solid rgb(90, 158, 181);
+  left: 50%;
+  top: 40%;
+  margin-left: -15%;
+  margin-top: -14%;
 }
+
 #signup {
   width: 500px;
   background-color: white;
   font-family: 'Fauna One', serif;
   position: relative;
   border: 5px solid rgb(90, 158, 181);
-}
-
-#login {
-  left: 50%;
-  top: 45%;
-  margin-left: -210px;
-  margin-top: -158px;
-}
-#signup {
   left: 50%;
   top: 25%;
   margin-left: -210px;
   margin-top: -158px;
 }
+
+
+
 
 .email, .username, .password, .firstName, .lastName, .confirmedPassword{
   margin-top: 1.5%;

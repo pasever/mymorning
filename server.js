@@ -25,12 +25,17 @@ const express = require('express'),
 //   }
 // });
 
-//setting up our session
+//setting up our sessionamo
 
 const store = new MongoDBStore(
   {
     uri: 'mongodb://localhost/detais',
     collection: 'MySessions'
+  });
+
+  store.on('error', function(error) {
+    assert.ifError(error);
+    assert.ok(false);
   });
 
   app.use(session({
@@ -68,7 +73,7 @@ app.use(expressSanitizer());
 mongoose.connect("mongodb://localhost/detais");
 mongoose.connection.on('error', console.error.bind(console, 'connection error'));
 
-//handlebars settings 
+//handlebars settings
 app.engine("handlebars", exphbs({
   defaultLayout: "main",
   layoutsDir: app.get('views') + '/layouts',
@@ -110,7 +115,7 @@ app.post("/login", async (req, res, next) => {
   } catch (error) {
     error.message = 'The username or password you entered is incorrect.';
     res.render('login', {
-      error
+      error: error.message
     });
   }
 
@@ -133,7 +138,6 @@ app.post("/signup", (req, res) => {
 
   // const validData = await validateData(req.body);
 
-
   req.body.sanitized = {
     firstName: req.sanitize(req.body.firstName),
     lastName: req.sanitize(req.body.lastName),
@@ -141,7 +145,7 @@ app.post("/signup", (req, res) => {
     password: req.sanitize(req.body.password),
     confirmedPassword: req.sanitize(req.body.confirmedPassword)
   };
-  
+
   const {
     firstName,
     lastName,
@@ -172,7 +176,6 @@ app.post("/signup", (req, res) => {
       console.log(req.session);
       req.session.user = user;
       res.redirect("/profile");
-
     });
 
 });
